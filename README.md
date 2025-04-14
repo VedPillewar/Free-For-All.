@@ -4,9 +4,9 @@ This are the code which any beginner can use for starting and getting boost in h
 
 [1] LANGUAGE:- "Python"
 
-PROBLEM STATEMENT:- Find whether the number is Armstrong number or not .
+    PROBLEM STATEMENT:- Find whether the number is Armstrong number or not .
 
-CODE NO :- 1
+    CODE NO :- 1
 
           n=int(input("enter any number"))
           sum=o
