@@ -2,12 +2,7 @@
 This are the code which any beginner can use for starting and getting boost in his programming career . 
 
 
-
-
-
-
-
-LANGUAGE:- "Python"
+[1] LANGUAGE:- "Python"
 
 PROBLEM STATEMENT:- Find whether the number is Armstrong number or not .
 
@@ -31,7 +26,7 @@ CODE NO :- 1
 
 
 
-LANGUAGE:- "Python"
+[2] LANGUAGE:- "Python"
 
 PROBLEM STATEMENT:- Convert binary to decimal no.
 
