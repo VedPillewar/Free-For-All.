@@ -6,7 +6,9 @@ LANGUAGE:- Python
 
 PROBLEM STATEMENT:- Find whether the number is Armstrong number or not .
 
-CODE:-    n=int(input("enter any number"))
+CODE:- 
+
+          n=int(input("enter any number"))
           sum=o
           number=n
           l=len(Str(n))
