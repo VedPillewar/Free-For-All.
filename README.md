@@ -62,7 +62,7 @@ CODE NO :- 2
       n=Str(input("enter any character")
 
       if(n=='*'):
-              break
+      break
       else if(n.islower):
       lower_count=lower_count+1
       else if(n.isupper):
