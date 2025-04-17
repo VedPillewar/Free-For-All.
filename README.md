@@ -211,10 +211,12 @@ CODE NO :- 2
       import Rpi.GPIO as GPIO
       import time
       LED=18
+      
       GPIO.setmode(GPIO.BOARD)
       GPIO.setwarnings(False)
       GPIO.setup(LED,GPIO.PUT)
       GPIO.outside(LED,False)
+      
       try;
       while True:
       GPIO.output(LED,True)
@@ -223,6 +225,7 @@ CODE NO :- 2
       GPIO.output(LED,False)
       print("LED OFF")
       time sleep(1)
+      
       finally:
       GPIO.cleanup()
 
@@ -234,7 +237,7 @@ CODE NO :- 2
 
    HARDWARE BOARD:-"Raspberry Pi 4/5"
 
-   PROBLEM STATEMENT:- Code for blinking of LED.
+   PROBLEM STATEMENT:- Code for blinking of LED by using IR sensors.
 
    CODE NO :- 9
 
@@ -243,14 +246,17 @@ CODE NO :- 2
       import time
       LED=18
       SENSOR=16
+      
       GPIO.setmode(GPIO.BOARD)
       GPIO.setwarnings(False)
       GPIO.setup(LED,GPIO.OUT)
       GPIO.setup(SENSOR,GPIO.IN)
       GPIO.output(LED,False)
+      
       print("IR INITIALIZE")
       time.sleep(5)
       print("IR READY")
+      
       try:
       while True:
       if GPIO.input (SENSOR):
@@ -260,18 +266,235 @@ CODE NO :- 2
       time.sleep(0.2)
       else:
       GPIO.output (LED,False)
+      
       finally:
       GPIO.cleanup()
 
 
 
+   [10]|[E] LANGUAGE:- "Python"
+
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   PROBLEM STATEMENT:- Code for ultrasonic sensors interfacing.
+
+   CODE NO :- 10
 
 
+      import Rpi.GPIO as GPIO
+      import time 
+      
+      GPIO.setup(GPIO.BOARD)
+      TRIG=13
+      ECHO=18
+      
+      GPIO.setup(TRIG,GPIO.OUT)
+      GPIO.setup(ECHO,GPIO.IN)
+      def.distance():
+      GPIO.output(TRIG,GPIO.LOW)
+      time.sleep(0.001)
+      GPIO.output(TRIG,GPIO.HIGH)
+      time.sleep(0.001)
+      GPIO.output(TRIG,GPIO.LOW)
+      
+      while GPIO.input(ECHO)==GPIO LOW;
+      pulse_end=time.time()
+      pulse_duration=pulse_end_pulse_Stord
+      distance=pulse duration*34200/2 return distance
+      
+      try:
+      while True:
+      dist=distance()
+      print("measured distance=%.if cm" %dist)
+      time.sleep(1)
+      
+      finally:
+      GPIO.cleanup()
+      
+     
+      
+   [11]|[F] LANGUAGE:- "Python"
 
-       
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   PROBLEM STATEMENT:- Code for Servo motor.
+
+   CODE NO :- 11
+
+
+      import Rpi.GPIO as GPIO
+      import time 
+
+      from time import sleep
+      GPIO.setwarning(False)
+      GPIO.setmode(GPIO.BOARD)
+      GPIO.setup(11,GPIO.OUT)
+      p=GPIO.PWM(11,50)
+
+      p.start(0)
+      try:
+      while true:
+      p.changeDutyCycle(2.5)
+      time.sleep(1)
+      p.changeDutyCycle(12.5)
+      time.sleep(1)
+
+      except KeyboardInterupt:
+      print("\n Exiting program")
+
+      finally
+      p.stop()
+      GPIO.cleanup()
+      
+      
+      
+   [12]|[G] LANGUAGE:- "Python"
+
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   ADDITINAL REQUIRMENT:- "ThingSpeak" (WebSite) account & channel.
+
+   PROBLEM STATEMENT:- Code for using ultrasonic sensor with "ThingSpeak".
+
+   CODE NO :- 12
+   
+
+    import sys
+    import urllib.request
+    import time
+    import RPi.GPIO as GPIO
+    GPIO.setmode(GPIO.BOARD)
+    GPIO.setwarnings(False)
+    GPIO_TRIGGER=18
+    GPIO_ECHO =15
+    
+    GPIO.setup(GPIO_TRIGGER,GPIO.OUT)
+    GPIO.setup(GPIO_ECHO,GPIO.IN)
+    
+    #Enter your API Key here
+    myAPI='YUGUBFBLT7YR2KWD'
+    
+    #URL where we will send the data
+    baseURL='https://api.thingspeak.com/update?api_key=%s' %myAPI
+    
+    def ultrasonic_sensor():
+   	#set trigger to high
+   	GPIO.output(GPIO_TRIGGER,True)
+    #set trigger after 0.01ms to LOW
+   	time.sleep(0.00001)
+   	GPIO.output(GPIO_TRIGGER,False)
+   	StartTime=time.time()
+   	StopTime=time.time()
+   	#save StartTime
+    
+   	while GPIO.input(GPIO_ECHO) == 0:
+		  StartTime=time.time()
+  		#save time of arrival
+   	while GPIO.input(GPIO_ECHO) == 1:
+  		StopTime=time.time()
+  		#time difference between start and arrival
+   	TimeElapsed= StopTime - StartTime
+    #multiply with sonic speed(34300cm/s) and divide by 2 go and return
+   	dist= (TimeElapsed*34300)/2
+   	print(dist)
+   	return dist
+    
+    try:
+   	while True:
+  		dist = ultrasonic_sensor()
+	  	if isinstance(dist,float):
+	 		dist = '%.2f' % dist
+	 		print('distance = ',dist)
+	 		#sending data to thinkspeak
+	 		conn=urllib.request.urlopen(baseURL+'&field1=%s' % (dist))
+	 		print(conn.read())
+	 		conn.close()
+	 		time.sleep(15)
+	  	else:
+		 	print('error')
+    
+    finally:
+   	print("Measurement stopped by User")
+   	GPIO.cleanup()
+	
+
+
+   [13]|[H] LANGUAGE:- "C"
+
+   HARDWARE BOARD:-"ESP32"
+
+   PROBLEM STATEMENT:- Code for a sensor-based system using ESP32 platform to alert a person if someone touches the locker (Buzzer & Touch sensor).
+
+   CODE NO :- 13
+
+
+    #define SENSOR 15
+    #define BUZZER 13
+
+    void setup() {
+    pinMode(SENSOR, INPUT);
+    pinMode(BUZZER, OUTPUT);
+    Serial.begin(115200);
+    }
+
+    void loop() {
+    int sensorValue = digitalRead(SENSOR);
+    
+    if (sensorValue == HIGH) {
+    digitalWrite(BUZZER, HIGH);
+    Serial.println("Locker Touched!");
+    delay(1000); }
+    else {
+    digitalWrite(BUZZER, LOW);
+    Serial.println("Locker Not Touched!");
+    delay(1000);
+    }
+    }
+
       
 
-        
+   [14]|[I] LANGUAGE:- "C"
+
+   HARDWARE BOARD:-"ESP32"
+
+   PROBLEM STATEMENT:- Code for a DHT11 sensor.
+
+   CODE NO :- 14    
+
+
+    #include <DHT.h>
+    #define DHT11_PIN 14
+    DHT dht11(DHT11_PIN, DHT11);
+
+    void setup() {
+    Serial.begin(9600);
+    dht11.begin();
+    }
+
+    void loop() {
+    float humi = dht11.readHumidity();
+    float tempC = dht11.readTemperature();
+    float tempF = dht11.readTemperature(true);
+    delay(2000);
+
+    }
+
+    if (isnan(tempC) || isnan(tempF) || isnan(humi)) {
+    Serial.println("Failed to read from DHT11 sensor!");
+    } else {
+    Serial.print("Humidity: ");
+    Serial.print(humi);
+    Serial.print("%");
+    Serial.print(" | ");
+    Serial.print("Temperature: ");
+    Serial.print(tempC);
+    Serial.print("°C ~ ");
+    Serial.print(tempF);
+    Serial.println("°F");
+    }
+
+    delay(2000);
+    }
 
     
 
