@@ -136,7 +136,75 @@ CODE NO :- 2
     for n in str:
     rev_str=n + rev_str
     print("the reserved string is",rev_str)
+
+
+
+        
+  [6]|[A] LANGUAGE:- "C"
+
+  HARDWARE BOARD:-"Arduino Uno"
+
+  PROBLEM STATEMENT:- C code for blinking of LED light on switch on/off.
+
+  CODE NO :- 6
+
+
+     # define ledpin 13
+     # define sw 7
+     int Vol=o;
+     Void setup();
+
+     pinMode(ledpin,OUTPUT);
+     pinMode(sw,INPUT);
+     }
+
+     void loop(){
+     Vol=digital Read (sw);
+     if(vol==HIGH){
+     digitalWrite(ledpin,LOW);}
+     else{
+     digitalWrite(ledpin,HIGH);}}
+
+
+
+   [7]|[B] LANGUAGE:- "C"
+
+   HARDWARE BOARD:-"Arduino Uno"
+
+   PROBLEM STATEMENT:- C program to run IR sensor with LED.
+
+   CODE NO :- 7
+
+
+    int IRsensor=7;
+    int ledpin=13;
+
+    void setup(){
+    Serial.begin(115200);
+    Serial.println("serial working");
+    pinMode(lepin,OUTPUT);
+    pinMode(IRsensor,INPUT);
+    }
+    void loop(){
+    int sensorstatus=digitalRead(IRsensor);
+    if(sensorstatus==0){
+    digitalWrite(ledpin,HIGH);
+    Serial.println("motion detected");
+    }
+    else{
+    digitalWrite(ledpin,LOW);
+    Serial.println("motion not detected");
+    }}
     
+
+    
+
+
+   
+
+     
+   
+
 
 
      
