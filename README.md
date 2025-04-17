@@ -112,6 +112,33 @@ CODE NO :- 2
     print("prime count is ", p_count)
     print(" composite count is ",c_count)
 
+
+
+    
+  [5] LANGUAGE:- "Python"
+
+  PROBLEM STATEMENT:- Enter a string and search for a character in it,display the count of the character for which it appears in this string.
+
+  CODE NO :- 5
+
+
+    Str=input("enter any string")
+    target=input("enter any characters")
+    rev_str=""
+
+    Ch_count=0
+
+    for Ch is str:
+    if(Ch==target):
+    Ch_count=Ch_count+1
+    print("the count of traget is",Ch_count)
+
+    for n in str:
+    rev_str=n + rev_str
+    print("the reserved string is",rev_str)
+    
+
+
      
      
      
