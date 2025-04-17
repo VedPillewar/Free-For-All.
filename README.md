@@ -195,7 +195,83 @@ CODE NO :- 2
     digitalWrite(ledpin,LOW);
     Serial.println("motion not detected");
     }}
+
+
+
     
+   [8]|[C] LANGUAGE:- "Python"
+
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   PROBLEM STATEMENT:- Code for blinking of LED.
+
+   CODE NO :- 8
+
+
+      import Rpi.GPIO as GPIO
+      import time
+      LED=18
+      GPIO.setmode(GPIO.BOARD)
+      GPIO.setwarnings(False)
+      GPIO.setup(LED,GPIO.PUT)
+      GPIO.outside(LED,False)
+      try;
+      while True:
+      GPIO.output(LED,True)
+      print("LED ON")
+      time.sleep(1)
+      GPIO.output(LED,False)
+      print("LED OFF")
+      time sleep(1)
+      finally:
+      GPIO.cleanup()
+
+
+
+      
+    
+   [9]|[D] LANGUAGE:- "Python"
+
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   PROBLEM STATEMENT:- Code for blinking of LED.
+
+   CODE NO :- 9
+
+
+      import Rpi.GPIO as GPIO
+      import time
+      LED=18
+      SENSOR=16
+      GPIO.setmode(GPIO.BOARD)
+      GPIO.setwarnings(False)
+      GPIO.setup(LED,GPIO.OUT)
+      GPIO.setup(SENSOR,GPIO.IN)
+      GPIO.output(LED,False)
+      print("IR INITIALIZE")
+      time.sleep(5)
+      print("IR READY")
+      try:
+      while True:
+      if GPIO.input (SENSOR):
+      GPIO.output (LED,True)
+      print("DETECTED")
+      while GPIO.input(SENSOR)
+      time.sleep(0.2)
+      else:
+      GPIO.output (LED,False)
+      finally:
+      GPIO.cleanup()
+
+
+
+
+
+
+       
+      
+
+        
 
     
 
