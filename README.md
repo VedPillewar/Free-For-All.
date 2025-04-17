@@ -330,8 +330,8 @@ CODE NO :- 2
       GPIO.setmode(GPIO.BOARD)
       GPIO.setup(11,GPIO.OUT)
       p=GPIO.PWM(11,50)
-
       p.start(0)
+      
       try:
       while true:
       p.changeDutyCycle(2.5)
@@ -378,44 +378,49 @@ CODE NO :- 2
     baseURL='https://api.thingspeak.com/update?api_key=%s' %myAPI
     
     def ultrasonic_sensor():
-   	#set trigger to high
-   	GPIO.output(GPIO_TRIGGER,True)
-    #set trigger after 0.01ms to LOW
-   	time.sleep(0.00001)
-   	GPIO.output(GPIO_TRIGGER,False)
-   	StartTime=time.time()
-   	StopTime=time.time()
-   	#save StartTime
+    #set trigger to high
+    GPIO.output(GPIO_TRIGGER,True)
     
-   	while GPIO.input(GPIO_ECHO) == 0:
-		  StartTime=time.time()
-  		#save time of arrival
-   	while GPIO.input(GPIO_ECHO) == 1:
-  		StopTime=time.time()
-  		#time difference between start and arrival
-   	TimeElapsed= StopTime - StartTime
+    #set trigger after 0.01ms to LOW
+    time.sleep(0.00001)
+    GPIO.output(GPIO_TRIGGER,False)
+    StartTime=time.time()
+    StopTime=time.time()
+    #save StartTime
+    
+    while GPIO.input(GPIO_ECHO) == 0:
+    StartTime=time.time()
+    
+    #save time of arrival
+    while GPIO.input(GPIO_ECHO) == 1:
+    StopTime=time.time()
+    
+    #time difference between start and arrival
+    TimeElapsed= StopTime - StartTime
+    
     #multiply with sonic speed(34300cm/s) and divide by 2 go and return
-   	dist= (TimeElapsed*34300)/2
-   	print(dist)
-   	return dist
+    dist= (TimeElapsed*34300)/2
+    print(dist)
+    return dist
     
     try:
-   	while True:
-  		dist = ultrasonic_sensor()
-	  	if isinstance(dist,float):
-	 		dist = '%.2f' % dist
-	 		print('distance = ',dist)
-	 		#sending data to thinkspeak
-	 		conn=urllib.request.urlopen(baseURL+'&field1=%s' % (dist))
-	 		print(conn.read())
-	 		conn.close()
-	 		time.sleep(15)
-	  	else:
-		 	print('error')
+    while True:
+    dist = ultrasonic_sensor()
+    if isinstance(dist,float):
+    dist = '%.2f' % dist 
+    print('distance = ',dist)
+    
+    #sending data to thinkspeak
+    conn=urllib.request.urlopen(baseURL+'&field1=%s' % (dist))
+    print(conn.read())
+    conn.close()
+    time.sleep(15)
+    else:
+    print('error')
     
     finally:
-   	print("Measurement stopped by User")
-   	GPIO.cleanup()
+    print("Measurement stopped by User")
+    GPIO.cleanup()
 	
 
 
