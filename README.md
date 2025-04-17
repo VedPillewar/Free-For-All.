@@ -80,7 +80,38 @@ CODE NO :- 2
 
       print("digit count")
       print(digit_count)
-      
+
+
+
+  [4] LANGUAGE:- "Python"
+
+  PROBLEM STATEMENT:- To find whether the number is prime number or not.
+
+  CODE NO :- 4
+
+    n= int(input("enter any number"))
+
+    p_count=0
+    c_count=0
+
+    while n!=-1:
+
+    if n<2:
+    print ("neither prime nor composite")
+    else:
+    for i in range (2,int (n**0.5)+1):
+    if n%i==0:
+    c_count=c_count+1
+    break
+    else:
+    print("the number is composite")
+    p_count=p_count+1
+
+    n=int(input("enter any number(-1 to exit))):
+    print("code exited")
+    print("prime count is ", p_count)
+    print(" composite count is ",c_count)
+
      
      
      
