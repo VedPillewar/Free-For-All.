@@ -868,10 +868,10 @@ CODE NO :- 2
     while True:
         if gas_sensor.value == 0:
             # 0 = Gas detected (depends on module logic level)
-            print("⚠️ Harmful gas detected! Buzzer ON")
+            print(" Harmful gas detected! Buzzer ON")
             buzzer.on()
         else:
-            print("✅ Air is clean. Buzzer OFF")
+            print(" Air is clean. Buzzer OFF")
             buzzer.off()
         sleep(1)
 
@@ -903,9 +903,9 @@ CODE NO :- 2
     try:
     while True:
         if moisture_sensor.value == 0:
-            print("💧 Soil is DRY. Water the plant!")
+            print(" Soil is DRY. Water the plant!")
         else:
-            print("🌿 Soil is MOIST. No need to water.")
+            print(" Soil is MOIST. No need to water.")
         sleep(2)
 
     except KeyboardInterrupt:
@@ -939,23 +939,23 @@ CODE NO :- 2
     servo = Servo(23)
 
     def water_the_plant():
-    print("🌊 Activating servo to water the plant...")
+    print(" Activating servo to water the plant...")
     servo.min()  # tilt or open
     sleep(2)
     servo.max()  # return to original position
     sleep(1)
     servo.detach()  # stop signal to avoid jitter
 
-    print("🌿 Soil Monitoring System with Water Drop Started...")
+    print(" Soil Monitoring System with Water Drop Started...")
 
     try:
     while True:
         if moisture_sensor.value == 0:
-            print("⚠️ Soil is DRY!")
+            print("Soil is DRY!")
             buzzer.on()
             water_the_plant()
         else:
-            print("✅ Soil is moist.")
+            print("Soil is moist.")
             buzzer.off()
         sleep(5)
 
