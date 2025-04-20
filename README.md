@@ -913,3 +913,54 @@ CODE NO :- 2
 
    
     
+   [21]|[P] LANGUAGE:- "Python"
+
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   PROBLEM STATEMENT:-Code for Soil Moisture Sensor with Buzzer Alert and Watering Servo Motor .
+
+   NECESSARY LIBRARIES:- sudo apt update,sudo apt install python3-gpiozero python3-rpi.gpio
+
+   CODE NO :- 21
+
+
+    from gpiozero import DigitalInputDevice, Buzzer
+    from gpiozero import Servo
+    from time import sleep
+    from signal import pause
+
+    # Moisture sensor connected to GPIO17
+    moisture_sensor = DigitalInputDevice(17)
+
+    # Buzzer on GPIO18
+    buzzer = Buzzer(18)
+
+    # Servo on GPIO23
+    servo = Servo(23)
+
+    def water_the_plant():
+    print("🌊 Activating servo to water the plant...")
+    servo.min()  # tilt or open
+    sleep(2)
+    servo.max()  # return to original position
+    sleep(1)
+    servo.detach()  # stop signal to avoid jitter
+
+    print("🌿 Soil Monitoring System with Water Drop Started...")
+
+    try:
+    while True:
+        if moisture_sensor.value == 0:
+            print("⚠️ Soil is DRY!")
+            buzzer.on()
+            water_the_plant()
+        else:
+            print("✅ Soil is moist.")
+            buzzer.off()
+        sleep(5)
+
+    except KeyboardInterrupt:
+    print("System stopped by user.")
+    buzzer.off()
+    servo.detach()
+
