@@ -507,7 +507,7 @@ CODE NO :- 2
 
    HARDWARE BOARD:-"Raspberry Pi 4/5"
 
-   PROBLEM STATEMENT:- Code for a running servo when ever any object comes infornt of camera.
+   PROBLEM STATEMENT:- Code for a running servo motor when ever any object comes infornt of camera.
 
    CODE NO :- 15   
 
@@ -648,9 +648,200 @@ CODE NO :- 2
 
 
 
+   [17]|[L] LANGUAGE:- "Python"
+
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   PROBLEM STATEMENT:- Code for a running DHT11 sensor and send information on display.
+
+   CODE NO :- 17  
 
 
-     
+     import Adafruit_DHT
+    from RPLCD.i2c import CharLCD
+    from time import sleep
+
+    # Sensor setup
+    sensor = Adafruit_DHT.DHT11
+    dht_pin = 4  # GPIO where DATA of DHT11 is connected
+
+       # LCD setup (check your I2C address, commonly 0x27 or 0x3F)
+    lcd = CharLCD('PCF8574', 0x27)
+
+    def read_dht11():
+    humidity, temperature = Adafruit_DHT.read_retry(sensor, dht_pin)
+    return humidity, temperature
+
+    try:
+    while True:
+        humidity, temperature = read_dht11()
+        if humidity is not None and temperature is not None:
+            lcd.clear()
+            lcd.write_string(f"Temp: {temperature}C")
+            lcd.crlf()
+            lcd.write_string(f"Humidity: {humidity}%")
+            print(f"Temp: {temperature}C  Humidity: {humidity}%")
+        else:
+            lcd.clear()
+            lcd.write_string("Sensor Error")
+            print("Failed to read from DHT11")
+        sleep(2)
+
+    except KeyboardInterrupt:
+    print("Program stopped by user")
+    lcd.clear()
+
+
+
+   [18]|[M] LANGUAGE:- "Python"
+
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   PROBLEM STATEMENT:- Code for jetson nano for do 3d scan and termo vision using camera.
+
+   NECESSARY LIBRARIES:- sudo apt-get update
+                         sudo apt-get install -y libusb-1.0-0-dev
+                         sudo apt-get install -y libssl-dev libudev-dev
+                         # Download and install RealSense SDK
+                         sudo apt-get install -y librealsense2-dev
+                         pip3 install pyrealsense2
+                         sudo apt-get install -y python3-opencv
+                         pip3 install pylepton
+
+   CODE NO :- 18 (A) Code for 3D Scanning using Intel RealSense
+
+      import pyrealsense2 as rs
+      import numpy as np
+      import cv2
+
+     # Configure the RealSense camera
+     pipeline = rs.pipeline()
+     config = rs.config()
+     config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+     config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+
+    # Start the pipeline
+    pipeline.start(config)
+
+    try:
+    while True:
+        # Wait for frames from the camera
+        frames = pipeline.wait_for_frames()
+        
+        # Get the depth and color frames
+        depth_frame = frames.get_depth_frame()
+        color_frame = frames.get_color_frame()
+        
+        # Convert frames to numpy arrays
+        depth_image = np.asanyarray(depth_frame.get_data())
+        color_image = np.asanyarray(color_frame.get_data())
+
+        # Apply color map to depth image
+        depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
+
+        # Stack color and depth images horizontally
+        combined_image = np.hstack((color_image, depth_colormap))
+
+        # Display the combined image
+        cv2.imshow('3D Scan', combined_image)
+
+        # Exit on pressing 'q'
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    except KeyboardInterrupt:
+    print("Exiting...")
+    pipeline.stop()
+    cv2.destroyAllWindows()
+
+
+(B) Code for Thermal Vision using FLIR Lepton
+
+
+        import cv2
+        import numpy as np
+        import pylepton
+
+        # Initialize the FLIR Lepton camera
+     with pylepton.lepton() as camera:
+    while True:
+        # Capture thermal data from the Lepton sensor
+        frame, _ = camera.capture()
+
+        # Normalize the thermal image data (for visualization purposes)
+        frame_normalized = cv2.normalize(frame, None, 0, 255, cv2.NORM_MINMAX)
+
+        # Apply color map to the thermal data
+        frame_colored = cv2.applyColorMap(np.uint8(frame_normalized), cv2.COLORMAP_JET)
+
+        # Show the thermal image
+        cv2.imshow('Thermal Vision', frame_colored)
+
+        # Exit on pressing 'q'
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    cv2.destroyAllWindows()
+
+
+(C) Combined 3D Scanning and Thermal Vision
+
+
+    import pyrealsense2 as rs
+    import numpy as np
+    import cv2
+    import pylepton
+    from time import sleep
+
+    # Configure the RealSense camera
+    pipeline = rs.pipeline()
+    config = rs.config()
+    config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+    config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+
+    # Start the RealSense pipeline
+    pipeline.start(config)
+
+    # Initialize the FLIR Lepton camera
+    thermal_camera = pylepton.lepton()
+
+    try:
+    while True:
+        # Wait for frames from the RealSense camera
+        frames = pipeline.wait_for_frames()
+
+        # Get depth and color frames from RealSense
+        depth_frame = frames.get_depth_frame()
+        color_frame = frames.get_color_frame()
+
+        # Convert frames to numpy arrays
+        depth_image = np.asanyarray(depth_frame.get_data())
+        color_image = np.asanyarray(color_frame.get_data())
+
+        # Get thermal frame from FLIR Lepton
+        thermal_frame, _ = thermal_camera.capture()
+        thermal_normalized = cv2.normalize(thermal_frame, None, 0, 255, cv2.NORM_MINMAX)
+        thermal_colored = cv2.applyColorMap(np.uint8(thermal_normalized), cv2.COLORMAP_JET)
+
+        # Apply color map to depth image
+        depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
+
+        # Combine RGB, Depth, and Thermal images horizontally
+        combined_image = np.hstack((color_image, depth_colormap, thermal_colored))
+
+        # Display the combined result
+        cv2.imshow('3D Scan and Thermal Vision', combined_image)
+
+        # Exit on pressing 'q'
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    except KeyboardInterrupt:
+    print("Exiting...")
+    pipeline.stop()
+    cv2.destroyAllWindows()
+    thermal_camera.close()
+
      
      
     
