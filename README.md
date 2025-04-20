@@ -573,76 +573,76 @@ CODE NO :- 2
    CODE NO :- 16   
 
 
-    import RPi.GPIO as GPIO
-    import time
+     import RPi.GPIO as GPIO
+     import time
     
-    GPIO.setmode(GPIO.BCM)
+     GPIO.setmode(GPIO.BCM)
 
-    TRIG = 23
-    ECHO = 24
+     TRIG = 23
+     ECHO = 24
 
      IN1 = 17
      IN2 = 18
      IN3 = 27
      IN4 = 22
 
-    motor_pins = [IN1, IN2, IN3, IN4]
+     motor_pins = [IN1, IN2, IN3, IN4]
 
-    GPIO.setup(TRIG, GPIO.OUT)
-    GPIO.setup(ECHO, GPIO.IN)
-    for pin in motor_pins:
-    GPIO.setup(pin, GPIO.OUT)
-    GPIO.output(pin, False)
+     GPIO.setup(TRIG, GPIO.OUT)
+     GPIO.setup(ECHO, GPIO.IN)
+     for pin in motor_pins:
+     GPIO.setup(pin, GPIO.OUT)
+     GPIO.output(pin, False)
 
-    step_seq = [
-    [1,0,0,1],
-    [1,0,0,0],
-    [1,1,0,0],
-    [0,1,0,0],
-    [0,1,1,0],
-    [0,0,1,0],
-    [0,0,1,1],
-    [0,0,0,1]
-    ]
+     step_seq = [
+     [1,0,0,1],
+     [1,0,0,0],
+     [1,1,0,0],
+     [0,1,0,0],
+     [0,1,1,0],
+     [0,0,1,0],
+     [0,0,1,1],
+     [0,0,0,1]
+     ]
 
-    def get_distance():
-    GPIO.output(TRIG, True)
-    time.sleep(0.00001)
-    GPIO.output(TRIG, False)
+     def get_distance():
+     GPIO.output(TRIG, True)
+     time.sleep(0.00001)
+     GPIO.output(TRIG, False)
 
-    start_time = time.time()
-    stop_time = time.time()
+     start_time = time.time()
+     stop_time = time.time()
 
 
-    while GPIO.input(ECHO) == 0:
-        start_time = time.time()
+     while GPIO.input(ECHO) == 0:
+     start_time = time.time()
 
-    while GPIO.input(ECHO) == 1:
-        stop_time = time.time()
+     while GPIO.input(ECHO) == 1:
+     stop_time = time.time()
 
-    elapsed = stop_time - start_time
-    distance = (elapsed * 34300) / 2
-    return distance
+     elapsed = stop_time - start_time
+     distance = (elapsed * 34300) / 2
+     return distance
 
-    def move_stepper(steps=512, delay=0.002):
-    for _ in range(steps):
-        for step in step_seq:
-            for pin in range(4):
-                GPIO.output(motor_pins[pin], step[pin])
-            time.sleep(delay)
+     def move_stepper(steps=512, delay=0.002):
+     for _ in range(steps):
+     for step in step_seq:
+     for pin in range(4):
+     GPIO.output(motor_pins[pin], step[pin])
+     time.sleep(delay)
 
     try:
     print("System Ready. Press Ctrl+C to stop.")
     while True:
-        dist = get_distance()
-        print(f"Distance: {dist:.1f} cm")
+    dist = get_distance()
+    print(f"Distance: {dist:.1f} cm")
 
-        if dist > 2 and dist <= 15:
-            print("Object detected! Rotating stepper motor...")
-            move_stepper()  # One full revolution (512 steps)
-            time.sleep(1)
+    if dist > 2 and dist <= 15:
+    print("Object detected! Rotating stepper motor...")
+    move_stepper()  # One full revolution (512 steps)
+    time.sleep(1)
 
-        time.sleep(0.2)
+    time.sleep(0.2)
 
     except KeyboardInterrupt:
     print("\nCleaning up GPIO and exiting.")
