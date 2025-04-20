@@ -848,7 +848,7 @@ CODE NO :- 2
 
    HARDWARE BOARD:-"Raspberry Pi 4/5"
 
-   PROBLEM STATEMENT:-Code for using gas senor and when ever any harmfull gas get detect buzzer will start buzz
+   PROBLEM STATEMENT:-Code for using gas senor and when ever any harmfull gas get detect buzzer will start buzz.
 
    NECESSARY LIBRARIES:- sudo apt update,sudo apt install python3-gpiozero
 
@@ -881,6 +881,35 @@ CODE NO :- 2
 
 
 
+   [20]|[O] LANGUAGE:- "Python"
+
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   PROBLEM STATEMENT:-Code for Soil Moisture Sensor with Raspberry Pi.
+
+   NECESSARY LIBRARIES:- sudo apt update,sudo apt install python3-gpiozero
+
+   CODE NO :- 20
+
+
+     from gpiozero import DigitalInputDevice
+    from time import sleep
+
+    # Moisture sensor setup (connected to GPIO17)
+    moisture_sensor = DigitalInputDevice(17)
+
+    print("Soil Moisture Monitoring Started.")
+
+    try:
+    while True:
+        if moisture_sensor.value == 0:
+            print("💧 Soil is DRY. Water the plant!")
+        else:
+            print("🌿 Soil is MOIST. No need to water.")
+        sleep(2)
+
+    except KeyboardInterrupt:
+    print("Program stopped.")
 
    
     
