@@ -844,5 +844,43 @@ CODE NO :- 2
 
      
      
-    
+   [19]|[N] LANGUAGE:- "Python"
+
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   PROBLEM STATEMENT:-Code for using gas senor and when ever any harmfull gas get detect buzzer will start buzz
+
+   NECESSARY LIBRARIES:- sudo apt update,sudo apt install python3-gpiozero
+
+   CODE NO :- 19
+
+
+    from gpiozero import DigitalInputDevice, Buzzer
+     from time import sleep
+
+    # GPIO pin setup
+    gas_sensor = DigitalInputDevice(17)  
+    buzzer = Buzzer(18)               
+
+    print("Gas detection system initialized.")
+
+    try:
+    while True:
+        if gas_sensor.value == 0:
+            # 0 = Gas detected (depends on module logic level)
+            print("⚠️ Harmful gas detected! Buzzer ON")
+            buzzer.on()
+        else:
+            print("✅ Air is clean. Buzzer OFF")
+            buzzer.off()
+        sleep(1)
+
+    except KeyboardInterrupt:
+    print("Program terminated.")
+    buzzer.off()
+
+
+
+
+   
     
