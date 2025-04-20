@@ -700,13 +700,13 @@ CODE NO :- 2
    PROBLEM STATEMENT:- Code for jetson nano for do 3d scan and termo vision using camera.
 
    NECESSARY LIBRARIES:- sudo apt-get update
-                         sudo apt-get install -y libusb-1.0-0-dev
-                         sudo apt-get install -y libssl-dev libudev-dev
-                         # Download and install RealSense SDK
-                         sudo apt-get install -y librealsense2-dev
-                         pip3 install pyrealsense2
-                         sudo apt-get install -y python3-opencv
-                         pip3 install pylepton
+                         sudo apt-get install -y libusb-1.0-0-dev,
+                         sudo apt-get install -y libssl-dev libudev-dev,
+                         # Download and install RealSense SDK,
+                         sudo apt-get install -y librealsense2-dev,
+                         pip3 install pyrealsense2,
+                         sudo apt-get install -y python3-opencv,
+                         pip3 install pylepton,
 
    CODE NO :- 18 (A) Code for 3D Scanning using Intel RealSense
 
