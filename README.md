@@ -503,6 +503,64 @@ CODE NO :- 2
 
     
 
+  [15]|[J] LANGUAGE:- "Python"
+
+   HARDWARE BOARD:-"Raspberry Pi 4/5"
+
+   PROBLEM STATEMENT:- Code for a running servo when ever any object comes infornt of camera.
+
+   CODE NO :- 15   
+
+
+     import cv2
+     import RPi.GPIO as GPIO
+     import time
+ 
+     SERVO_PIN = 18
+     GPIO.setmode(GPIO.BCM)
+     GPIO.setup(SERVO_PIN, GPIO.OUT)
+
+     pwm = GPIO.PWM(SERVO_PIN, 50)
+     pwm.start(0)
+
+
+     def set_angle(angle):
+     duty = angle / 18 + 2
+     GPIO.output(SERVO_PIN, True)
+     pwm.ChangeDutyCycle(duty)
+     time.sleep(0.5)
+     GPIO.output(SERVO_PIN, False)
+     pwm.ChangeDutyCycle(0)
+
+     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
+
+     cap = cv2.VideoCapture(0)
+
+     try:
+     while True:
+     ret, frame = cap.read()
+     if not ret:
+     print("Failed to grab frame")
+     break
+
+     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+
+     if len(faces) > 0:
+     print("Person detected!")
+     set_angle(90)  # Rotate servo to 90 degrees
+     else: 
+     set_angle(0)  # Reset position
+
+     cv2.imshow("Camera Feed", frame)
+     if cv2.waitKey(1) & 0xFF == ord('q'):
+     break
+
+     finally:
+     cap.release()
+     cv2.destroyAllWindows()
+     pwm.stop()
+     GPIO.cleanup()
 
    
 
