@@ -1,0 +1,367 @@
+[1] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Find factorial of a number.
+
+CODE NO :- 1
+
+n=int(input("enter number"))
+fact=1
+
+for i in range(1,n+1):
+    fact=fact*i
+
+print("factorial is",fact)
+
+[2] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Check whether number is palindrome or not.
+
+CODE NO :- 2
+
+n=int(input("enter number"))
+temp=n
+rev=0
+
+while n>0:
+    r=n%10
+    rev=rev*10+r
+    n=n//10
+
+if temp==rev:
+    print("palindrome")
+else:
+    print("not palindrome")
+
+[3] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Find sum of digits of a number.
+
+CODE NO :- 3
+
+n=int(input("enter number"))
+sum=0
+
+while n>0:
+    r=n%10
+    sum=sum+r
+    n=n//10
+
+print("sum is",sum)
+
+[4] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Print fibonacci series upto n terms.
+
+CODE NO :- 4
+
+n=int(input("enter terms"))
+
+a=0
+b=1
+
+for i in range(n):
+    print(a)
+    c=a+b
+    a=b
+    b=c
+
+[5] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Check even or odd.
+
+CODE NO :- 5
+
+n=int(input("enter number"))
+
+if n%2==0:
+    print("even")
+else:
+    print("odd")
+
+[6] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Find largest of three numbers.
+
+CODE NO :- 6
+
+a=int(input("enter first"))
+b=int(input("enter second"))
+c=int(input("enter third"))
+
+if a>b and a>c:
+    print("largest is",a)
+elif b>c:
+    print("largest is",b)
+else:
+    print("largest is",c)
+
+[7] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Reverse a string.
+
+CODE NO :- 7
+
+s=input("enter string")
+rev=""
+
+for i in s:
+    rev=i+rev
+
+print("reverse is",rev)
+
+[8] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Count vowels in string.
+
+CODE NO :- 8
+
+s=input("enter string")
+count=0
+
+for i in s:
+    if i in "aeiouAEIOU":
+        count=count+1
+
+print("vowel count is",count)
+
+[9] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Check prime number.
+
+CODE NO :- 9
+
+n=int(input("enter number"))
+
+flag=0
+
+if n<2:
+    print("not prime")
+else:
+    for i in range(2,int(n**0.5)+1):
+        if n%i==0:
+            flag=1
+            break
+
+    if flag==0:
+        print("prime")
+    else:
+        print("not prime")
+
+[10] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Print multiplication table.
+
+CODE NO :- 10
+
+n=int(input("enter number"))
+
+for i in range(1,11):
+    print(n,"*",i,"=",n*i)
+
+[11] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Find GCD of two numbers.
+
+CODE NO :- 11
+
+a=int(input("enter first"))
+b=int(input("enter second"))
+
+while b!=0:
+    temp=b
+    b=a%b
+    a=temp
+
+print("gcd is",a)
+
+[12] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Find LCM of two numbers.
+
+CODE NO :- 12
+
+a=int(input("enter first"))
+b=int(input("enter second"))
+
+max=a if a>b else b
+
+while True:
+    if max%a==0 and max%b==0:
+        print("lcm is",max)
+        break
+    max=max+1
+
+[13] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Count number of words in string.
+
+CODE NO :- 13
+
+s=input("enter string")
+
+words=s.split()
+print("word count is",len(words))
+
+[14] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Remove duplicates from list.
+
+CODE NO :- 14
+
+l=list(map(int,input("enter elements").split()))
+
+new=[]
+
+for i in l:
+    if i not in new:
+        new.append(i)
+
+print(new)
+
+[15] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Sort list in ascending order.
+
+CODE NO :- 15
+
+l=list(map(int,input("enter elements").split()))
+
+l.sort()
+
+print(l)
+
+[16] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Find second largest number.
+
+CODE NO :- 16
+
+l=list(map(int,input("enter elements").split()))
+
+l.sort()
+
+print("second largest is",l[-2])
+
+[17] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Check Armstrong number.
+
+CODE NO :- 17
+
+n=int(input("enter number"))
+temp=n
+sum=0
+l=len(str(n))
+
+while n>0:
+    r=n%10
+    sum=sum+r**l
+    n=n//10
+
+if temp==sum:
+    print("armstrong")
+else:
+    print("not armstrong")
+
+[18] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Swap two numbers without third variable.
+
+CODE NO :- 18
+
+a=int(input("enter a"))
+b=int(input("enter b"))
+
+a=a+b
+b=a-b
+a=a-b
+
+print(a,b)
+
+[19] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Find ASCII value of character.
+
+CODE NO :- 19
+
+ch=input("enter character")
+
+print("ascii is",ord(ch))
+
+[20] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Generate random number.
+
+CODE NO :- 20
+
+import random
+
+print(random.randint(1,100))
+
+[21] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Check leap year.
+
+CODE NO :- 21
+
+year=int(input("enter year"))
+
+if (year%4==0 and year%100!=0) or year%400==0:
+    print("leap year")
+else:
+    print("not leap year")
+
+[22] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Convert decimal to binary.
+
+CODE NO :- 22
+
+n=int(input("enter number"))
+
+print(bin(n))
+
+[23] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Find length of string without using len.
+
+CODE NO :- 23
+
+s=input("enter string")
+
+count=0
+
+for i in s:
+    count=count+1
+
+print(count)
+
+[24] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Check anagram strings.
+
+CODE NO :- 24
+
+s1=input("enter first")
+s2=input("enter second")
+
+if sorted(s1)==sorted(s2):
+    print("anagram")
+else:
+    print("not anagram")
+
+[25] LANGUAGE:- "Python"
+
+PROBLEM STATEMENT:- Find maximum element in list.
+
+CODE NO :- 25
+
+l=list(map(int,input("enter elements").split()))
+
+max=l[0]
+
+for i in l:
+    if i>max:
+        max=i
+
+print("max is",max)
